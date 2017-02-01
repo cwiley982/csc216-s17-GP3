@@ -20,6 +20,6 @@ public class ConflictException extends Exception {
 	}
 	
 	public ConflictException() {
-		super("Schedule conflict.");
+		this("Schedule conflict.");
 	}
 }
