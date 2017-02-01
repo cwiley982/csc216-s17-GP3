@@ -6,7 +6,7 @@ package edu.ncsu.csc216.wolf_scheduler.course;
  * @author Caitlyn Wiley
  *
  */
-public abstract class Activity {
+public abstract class Activity implements Conflict{
 	
 	/** If the time is any higher, it is invalid */
 	private static final int UPPER_TIME = 2400;
@@ -256,6 +256,15 @@ public abstract class Activity {
 		} else if (!title.equals(other.title))
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.ncsu.csc216.wolf_scheduler.course.Conflict#checkConflict(edu.ncsu.csc216.wolf_scheduler.course.Activity)
+	 */
+	@Override
+	public void checkConflict(Activity possibleConflictingActivity) throws ConflictException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
