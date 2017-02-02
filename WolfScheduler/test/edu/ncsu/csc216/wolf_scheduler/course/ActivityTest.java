@@ -26,7 +26,7 @@ public class ActivityTest {
 			fail("A ConflictException was thrown when two Activities at the same time on completely distinct days were compared.");
 		}
 		
-		//tests conflicting activities
+		//a2 starts as a1 ends
 		a1.setMeetingDays("TH");
 		a1.setActivityTime(1445, 1530);
 		try {
@@ -36,6 +36,36 @@ public class ActivityTest {
 		    //Check that the internal state didn't change during method call.
 		    assertEquals("TH 2:45PM-3:30PM", a1.getMeetingString());
 		    assertEquals("TH 1:30PM-2:45PM", a2.getMeetingString());
+		}
+	}
+	
+	@Test
+	public void testCheckConflict2() {
+		Activity a1 = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", "MW", 1330, 1445);
+		Activity a2 = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", "MW", 1345, 1600);
+		//a2 starts during a1
+		try {
+			a1.checkConflict(a2);
+			fail(); //ConflictException should have been thrown, but was not.
+		} catch (ConflictException e) {
+			//Check that the internal state didn't change during method call.
+			assertEquals("MW 1:30PM-2:45PM", a1.getMeetingString());
+			assertEquals("MW 1:45PM-4:00PM", a2.getMeetingString());
+		}
+	}
+	
+	@Test
+	public void testCheckConflict3() {
+		Activity a1 = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", "MW", 1330, 1445);
+		Activity a2 = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", "MH", 1200, 1400);
+		//a2 ends during a1
+		try {
+			a1.checkConflict(a2);
+			fail(); //ConflictException should have been thrown, but was not.
+		} catch (ConflictException e) {
+			//Check that the internal state didn't change during method call.
+			assertEquals("MW 1:30PM-2:45PM", a1.getMeetingString());
+			assertEquals("MH 12:00PM-2:00PM", a2.getMeetingString());
 		}
 	}
 }
