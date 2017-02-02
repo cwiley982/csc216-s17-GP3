@@ -296,6 +296,14 @@ public abstract class Activity implements Conflict {
 				if (possibleConflictingActivity.endTime > this.startTime && possibleConflictingActivity.endTime < this.endTime) {
 					throw new ConflictException();
 				}
+				//Activity surrounds another activity
+				if (possibleConflictingActivity.startTime < this.startTime && possibleConflictingActivity.endTime >  this.endTime) {
+					throw new ConflictException();
+				}
+				//Activity occurs during another activity
+				if (possibleConflictingActivity.startTime > this.startTime && possibleConflictingActivity.endTime < this.endTime) {
+					throw new ConflictException();
+				}
 			}
 		}
 		
