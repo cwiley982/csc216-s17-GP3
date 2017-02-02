@@ -277,7 +277,7 @@ public abstract class Activity implements Conflict {
 		}
 		for (int i = 0; i < longDays.length(); i++) {
 			//reads through meeting days for this instance 
-			String day = this.getMeetingDays().substring(i, i + 1);
+			String day = longDays.substring(i, i + 1);
 			//if this instance and the parameter activity occur on at least one of the same days
 			if (shortDays.contains(day)) {
 				//Activity starts at the same time as another or ends at the same time as another
