@@ -19,13 +19,6 @@ import edu.ncsu.csc216.wolf_scheduler.course.Activity;
 public class ActivityRecordIO {
 
 	/**
-	 * Constructs the object ActivityRecordIO
-	 */
-	public ActivityRecordIO() {
-		//basic constructor of activity record io
-	}
-
-	/**
 	 * Writes Courses to course record file specified
 	 * 
 	 * @param fileName name of file to write course records to
