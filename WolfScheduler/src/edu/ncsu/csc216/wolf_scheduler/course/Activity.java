@@ -6,7 +6,7 @@ package edu.ncsu.csc216.wolf_scheduler.course;
  * @author Caitlyn Wiley
  *
  */
-public abstract class Activity implements Conflict{
+public abstract class Activity implements Conflict {
 	
 	/** If the time is any higher, it is invalid */
 	private static final int UPPER_TIME = 2400;
