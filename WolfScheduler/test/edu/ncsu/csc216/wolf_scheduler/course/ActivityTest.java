@@ -8,11 +8,16 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * Tests checkConflict method in Activity class
+ * 
  * @author Caitlyn Wiley
- *
  */
 public class ActivityTest {
 
+	/**
+	 * tests non-conflicting activities
+	 * tests an activity starting as another activity ends (end at noon and start at noon)
+	 */
 	@Test
 	public void testCheckConflict() {
 		Activity a1 = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", "MW", 1330, 1445);
@@ -39,6 +44,9 @@ public class ActivityTest {
 		}
 	}
 	
+	/**
+	 * tests one activity starting during another activity
+	 */
 	@Test
 	public void testCheckConflict2() {
 		Activity a1 = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", "MW", 1330, 1445);
@@ -54,6 +62,9 @@ public class ActivityTest {
 		}
 	}
 	
+	/**
+	 * tests one activity ending during another activity
+	 */
 	@Test
 	public void testCheckConflict3() {
 		Activity a1 = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", "MW", 1330, 1445);
