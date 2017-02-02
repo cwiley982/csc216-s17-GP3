@@ -277,8 +277,12 @@ public abstract class Activity implements Conflict {
 		}
 		for (int i = 0; i < longDays.length(); i++) {
 			//Arranged meeting days don't conflict with other activities
-			if (possibleConflictingActivity.getMeetingDays().equals("Arranged") || this.getMeetingDays().equals("Arranged")){
-				break;
+			if (possibleConflictingActivity.getMeetingDays().contains("Arranged") || this.getMeetingDays().contains("Arranged")){
+				if (!possibleConflictingActivity.getMeetingDays().equals("Arranged") || !this.getMeetingDays().equals("Arranged")) {
+					throw new ConflictException();
+				} else {
+					break;
+				}
 			}
 			//reads through meeting days for this instance 
 			String day = longDays.substring(i, i + 1);
