@@ -263,11 +263,27 @@ public abstract class Activity implements Conflict {
 	 */
 	@Override
 	public void checkConflict(Activity possibleConflictingActivity) throws ConflictException {
-		for (int i = 0; i < this.getMeetingDays().length(); i++) {
+		String longDays = "";
+		String shortDays = "";
+		if (this.getMeetingDays().length() > possibleConflictingActivity.getMeetingDays().length()) {
+			longDays = this.getMeetingDays();
+			shortDays = possibleConflictingActivity.getMeetingDays();
+		} else if (this.getMeetingDays().length() < possibleConflictingActivity.getMeetingDays().length()) {
+			longDays = possibleConflictingActivity.getMeetingDays();
+			shortDays = this.getMeetingDays();
+		} else {
+			longDays = this.getMeetingDays();
+			shortDays = possibleConflictingActivity.getMeetingDays();
+		}
+		for (int i = 0; i < longDays.length(); i++) {
 			//reads through meeting days for this instance 
 			String day = this.getMeetingDays().substring(i, i + 1);
 			//if this instance and the parameter activity occur on at least one of the same days
-			if (possibleConflictingActivity.getMeetingDays().contains(day)) {
+			if (shortDays.contains(day)) {
+				//Activity starts at the same time as another or ends at the same time as another
+				if (possibleConflictingActivity.startTime == this.startTime || possibleConflictingActivity.endTime == this.endTime){
+					throw new ConflictException();
+				}
 				//Activity starts as another ends or ends as another starts
 				if (this.startTime == possibleConflictingActivity.endTime || this.endTime == possibleConflictingActivity.startTime) {
 					throw new ConflictException();
