@@ -141,6 +141,19 @@ public class WolfSchedulerTest {
 		} catch (IllegalArgumentException e) {
 			assertEquals("You are already enrolled in CSC216", e.getMessage());
 		}
+		
+		//Attempt to add a conflicting course
+		try {
+			ws.addCourse("CSC116", "001");
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+		try {
+			ws.addCourse("CSC226", "001");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("The course cannot be added due to a conflict.", e.getMessage());
+		}
 	}
 	
 	/**
@@ -169,6 +182,14 @@ public class WolfSchedulerTest {
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertEquals("You have already created an event called Exercise", e.getMessage());
+		}
+		
+		//Attempt to add a conflicting event
+		try {
+			ws.addEvent("Brunch", "MWF", 845, 930, EVENT_WEEKLY_REPEAT, "");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("The event cannot be added due to a conflict.", e.getMessage());
 		}
 	}
 	

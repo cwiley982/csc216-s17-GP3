@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import edu.ncsu.csc216.wolf_scheduler.course.Activity;
+import edu.ncsu.csc216.wolf_scheduler.course.ConflictException;
 import edu.ncsu.csc216.wolf_scheduler.course.Course;
 import edu.ncsu.csc216.wolf_scheduler.course.Event;
 import edu.ncsu.csc216.wolf_scheduler.io.ActivityRecordIO;
@@ -193,6 +194,11 @@ public class WolfScheduler {
 			} else {
 				count++;
 			}
+			try {
+				schedule.get(i).checkConflict(course);
+			} catch (ConflictException e) {
+				throw new IllegalArgumentException("The course cannot be added due to a conflict.");
+			}
 		}
 		//adds course to schedule
 		if (count == schedule.size()) {
@@ -221,6 +227,11 @@ public class WolfScheduler {
 				throw new IllegalArgumentException("You have already created an event called " + event.getTitle());
 			} else {
 				count++;
+			}
+			try {
+				schedule.get(i).checkConflict(event);
+			} catch (ConflictException e) {
+				throw new IllegalArgumentException("The event cannot be added due to a conflict.");
 			}
 		}
 		if (count == schedule.size()) {
