@@ -263,55 +263,51 @@ public abstract class Activity implements Conflict {
 	 */
 	@Override
 	public void checkConflict(Activity possibleConflictingActivity) throws ConflictException {
-		String longDays = "";
-		String shortDays = "";
-		if (this.getMeetingDays().length() > possibleConflictingActivity.getMeetingDays().length()) {
-			longDays = this.getMeetingDays();
-			shortDays = possibleConflictingActivity.getMeetingDays();
-		} else if (this.getMeetingDays().length() < possibleConflictingActivity.getMeetingDays().length()) {
-			longDays = possibleConflictingActivity.getMeetingDays();
-			shortDays = this.getMeetingDays();
-		} else {
-			longDays = this.getMeetingDays();
-			shortDays = possibleConflictingActivity.getMeetingDays();
-		}
-		for (int i = 0; i < longDays.length(); i++) {
-			//if meetingDays = Arranged, cannot conflict
-			if (this.getMeetingDays().equals("Arranged") || possibleConflictingActivity.getMeetingDays().equals("Arranged")) {
-				break;
+		if (!this.getMeetingDays().equalsIgnoreCase("Arranged") && !possibleConflictingActivity.getMeetingDays().equalsIgnoreCase("Arranged")) {
+			String longDays = "";
+			String shortDays = "";
+			if (this.getMeetingDays().length() > possibleConflictingActivity.getMeetingDays().length()) {
+				longDays = this.getMeetingDays();
+				shortDays = possibleConflictingActivity.getMeetingDays();
+			} else if (this.getMeetingDays().length() < possibleConflictingActivity.getMeetingDays().length()) {
+				longDays = possibleConflictingActivity.getMeetingDays();
+				shortDays = this.getMeetingDays();
+			} else {
+				longDays = this.getMeetingDays();
+				shortDays = possibleConflictingActivity.getMeetingDays();
 			}
-			//reads through meeting days for this instance 
-			String day = longDays.substring(i, i + 1);
-			//if this instance and the parameter activity occur on at least one of the same days
-			if (shortDays.contains(day)) {
-				//Activity starts at the same time as another or ends at the same time as another
-				if (possibleConflictingActivity.startTime == this.startTime || possibleConflictingActivity.endTime == this.endTime){
-					throw new ConflictException();
-				}
-				//Activity starts as another ends or ends as another starts
-				if (this.startTime == possibleConflictingActivity.endTime || this.endTime == possibleConflictingActivity.startTime) {
-					throw new ConflictException();
-				}
-				//Activity starts during another activity
-				if (possibleConflictingActivity.startTime > this.startTime && possibleConflictingActivity.startTime < this.endTime) {
-					throw new ConflictException();
-				}
-				//Activity ends during another activity
-				if (possibleConflictingActivity.endTime > this.startTime && possibleConflictingActivity.endTime < this.endTime) {
-					throw new ConflictException();
-				}
-				//Activity surrounds another activity
-				if (possibleConflictingActivity.startTime < this.startTime && possibleConflictingActivity.endTime >  this.endTime) {
-					throw new ConflictException();
-				}
-				//Activity occurs during another activity
-				if (possibleConflictingActivity.startTime > this.startTime && possibleConflictingActivity.endTime < this.endTime) {
-					throw new ConflictException();
+			for (int i = 0; i < longDays.length(); i++) {
+				//if meetingDays = Arranged, cannot conflict
+				//reads through meeting days for this instance 
+				String day = longDays.substring(i, i + 1);
+				//if this instance and the parameter activity occur on at least one of the same days
+				if (shortDays.contains(day)) {
+					//Activity starts at the same time as another or ends at the same time as another
+					if (possibleConflictingActivity.startTime == this.startTime || possibleConflictingActivity.endTime == this.endTime){
+						throw new ConflictException();
+					}
+					//Activity starts as another ends or ends as another starts
+					if (this.startTime == possibleConflictingActivity.endTime || this.endTime == possibleConflictingActivity.startTime) {
+						throw new ConflictException();
+					}
+					//Activity starts during another activity
+					if (possibleConflictingActivity.startTime > this.startTime && possibleConflictingActivity.startTime < this.endTime) {
+						throw new ConflictException();
+					}
+					//Activity ends during another activity
+					if (possibleConflictingActivity.endTime > this.startTime && possibleConflictingActivity.endTime < this.endTime) {
+						throw new ConflictException();
+					}
+					//Activity surrounds another activity
+					if (possibleConflictingActivity.startTime < this.startTime && possibleConflictingActivity.endTime >  this.endTime) {
+						throw new ConflictException();
+					}
+					//Activity occurs during another activity
+					if (possibleConflictingActivity.startTime > this.startTime && possibleConflictingActivity.endTime < this.endTime) {
+						throw new ConflictException();
+					}
 				}
 			}
 		}
-		
-		
 	}
-
 }
