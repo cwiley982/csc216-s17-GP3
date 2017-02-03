@@ -79,4 +79,23 @@ public class ActivityTest {
 			assertEquals("MH 12:00PM-2:00PM", a2.getMeetingString());
 		}
 	}
+	
+	/**
+	 * tests one activity ending during another activity
+	 */
+	@Test
+	public void testCheckConflict4() {
+		Activity a1 = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", "A");
+		Activity a2 = new Course("CSC226", "Discrete Mathematics for Computer Scientists", "001", 3, "tmbarnes", "MWF", 1200, 1400);
+		//a1 is arranged so won't conflict with a2
+		try {
+			a1.checkConflict(a2);
+			//Check that the internal state didn't change during method call.
+			assertEquals("Arranged", a1.getMeetingString());
+			assertEquals("MWF 12:00PM-2:00PM", a2.getMeetingString());
+		} catch (ConflictException e) {
+			fail(); //exception shouldn't have been thrown
+			
+		}
+	}
 }
