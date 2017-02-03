@@ -263,7 +263,7 @@ public abstract class Activity implements Conflict {
 	 */
 	@Override
 	public void checkConflict(Activity possibleConflictingActivity) throws ConflictException {
-		if (!this.getMeetingDays().equalsIgnoreCase("Arranged") && !possibleConflictingActivity.getMeetingDays().equalsIgnoreCase("Arranged")) {
+		if (!this.getMeetingDays().contains("Arranged") && !possibleConflictingActivity.getMeetingDays().contains("Arranged")) {
 			String longDays = "";
 			String shortDays = "";
 			if (this.getMeetingDays().length() > possibleConflictingActivity.getMeetingDays().length()) {
